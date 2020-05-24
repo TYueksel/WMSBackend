@@ -10,9 +10,22 @@
 		database : global.sqlDB
 	});
 
-	connection.connect();
-	console.log("Mit Datenbank verbunden");
+	connection.connect(function(err) {
+		if (err) {
+	    		console.error('error connecting: ' + err.stack);
+	    		return;
+	  	}
+	 
+	  	console.log('Connected to database');
+	});
 	
 	// TODO: SQL Queries
+
+	exports.getBuildingIDs = function(cb) {
+		connection.query("SELECT * FROM Buildings", function(error, results, fields) {
+			if(error) throw error;
+			cb(results);
+		});
+	};
 
 }());

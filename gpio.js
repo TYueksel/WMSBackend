@@ -9,7 +9,7 @@
 	wpi.setup('wpi');
 
 	// PIN Modus Input
-	wpi.pinMode(pin, wpi.Output);
+	wpi.pinMode(pin, wpi.INPUT);
 
 	// Detects LOW to HIGH at PIN
 	wpi.pullUpDnControl(pin, wpi.PUD_UP);
