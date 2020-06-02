@@ -1,20 +1,38 @@
 (function() {
 
-	// all details on wiring pi at https://github.com/WiringPi/WiringPi-Node/blob/master/DOCUMENTATION.md
-	var wpi = require('wiringpi-node');
+	const Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
 
-	var pin = global.level_PIN;
+	/*var LED = new Gpio(global.valve2, 'out'); //use GPIO pin 4, and specify that it is output
+	LED.writeSync(1);
 
-	// PIN scheme in wiring pi
-	wpi.setup('wpi');
+	function myFunc() {
+  		LED.writeSync(0);
+	}
+	setTimeout(myFunc, 2000, '');*/
 
-	// PIN Modus Input
-	wpi.pinMode(pin, wpi.INPUT);
+	var flow = new Gpio(global.flowSensor, 'in');
+	var counter = 0;
 
-	// Detects LOW to HIGH at PIN
-	wpi.pullUpDnControl(pin, wpi.PUD_UP);
-	wpi.wiringPiISR(pin, wpi.INT_EDGE_RISING, function(delta) {
-		console.log("Pin " + pin + " changed to HIGH");
-	});
+	setInterval(() => {
+		var input = flow.readSync();
+		if (input===1) {
+			counter++;
+		}
+		if (input===0) {
+			counter = 0;
+		}
+		console.log(counter)
+	}, 100)
+
+
+	exports.togglePump = function(pin, mode) {
+		var pump = new Gpio(pin, 'out');
+		pump.writeSync(mode);
+	}
+
+	exports.toggleValve = function(pin, mode) {
+		var valve = new Gpio(pin, 'out');
+		valve.writeSync(mode);
+	}
 
 }());
