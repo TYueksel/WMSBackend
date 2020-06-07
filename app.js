@@ -1,18 +1,27 @@
-// config file
+// Config file
 require('./config.js');
 
-// connect to local db
+// Connect to local db
 const db = require('./db.js');
 
-const spi = require('./spi.js');
+// Connect to MQTT Broker
+const mqtt = require('./mqtt');
+
+//const spi = require('./spi.js');
 
 // Raspberry Pi GPIO
-// require('./gpio.js');
+//const gpio = require('./gpio.js');
 
 db.getBuildingIDs(function(res) {
 	console.log(res);
 });
 
-setInterval(() => {
+/*setInterval(() => {
 	spi.getWaterLevel(1);
-}, 2000)
+}, 2000)*/
+
+process.on('SIGINT', function() {
+	console.log("Terminating");
+	mqtt.closeMQTT();
+	process.exit();
+});

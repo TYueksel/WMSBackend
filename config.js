@@ -13,7 +13,7 @@
 	};
 	global.levelSensor3 = 8;
 	global.levelSensor4 = 8;
-	global.flowSensor = 21;
+	global.flowSensor = 18;
 	global.valve1 = {
 		PIN: 17,
 		state: 'off'
@@ -32,7 +32,7 @@
 	};
 	
 	/**
-	 * TODO: Config for local MySQL DB
+	 * Config for local MySQL DB
 	 */
 	global.sqlHOST = 'localhost';
 	global.sqlDB = 'WMS';
@@ -40,13 +40,11 @@
 	global.sqlPW = 'group24';
 
 	/**
-	 * TODO: Config for MQTT
+	 * Config for MQTT
 	 */
-	global.mqttUSER = 'user';
-	global.mqttPW = 'rand837P';
-	global.mqttHOST = 'fmsro1.de';
-	global.mqttPORT = '47021';
-	global.VIN = 'WME4514901K645679';
-	global.mqttTOPIC = 'fkfs/fleet/' + global.VIN;
+	global.mqttUSER = 'tolunay.yueksel@gmail.com';
+	global.mqttPW = '437c0228';
+	global.mqttHOST = 'mqtt://mqtt.dioty.co:1883';
+	global.mqttTOPIC = '/tolunay.yueksel@gmail.com/' + "tolu";
 
 }());
