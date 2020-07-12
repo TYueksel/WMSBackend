@@ -1,27 +1,22 @@
 // Config file
-require('./config.js');
+require('./config');
 
-// Connect to local db
-const db = require('./db.js');
+// Init Logger
+global.logger = require('./logger');
 
 // Connect to MQTT Broker
 const mqtt = require('./mqtt');
 
-//const spi = require('./spi.js');
-
 // Raspberry Pi GPIO
-//const gpio = require('./gpio.js');
-
-db.getBuildingIDs(function(res) {
-	console.log(res);
-});
-
-/*setInterval(() => {
-	spi.getWaterLevel(1);
-}, 2000)*/
+const actuator = require('./actuator');
 
 process.on('SIGINT', function() {
-	console.log("Terminating");
+	global.logger.log("Terminating");
+	actuator.togglePump(1, "off");
+	actuator.togglePump(2, "off");
+	actuator.toggleValve(1, "off");
+	actuator.toggleValve(2, "off");
 	mqtt.closeMQTT();
+	global.logger.close();
 	process.exit();
 });
